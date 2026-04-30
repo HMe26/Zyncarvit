@@ -1605,29 +1605,53 @@ ul { list-style: none; }
 @media (max-width: 900px) {
   .nav-menu {
     position: fixed;
-    inset: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+
+    width: 100vw;
+    height: 100vh;
+
     background: var(--bg-primary);
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 16px;
+
     transform: translateX(100%);
     transition: transform var(--transition-slow);
+
     z-index: 999;
-    padding: 40px;
+
+    padding: 20px;
+    overflow-x: hidden;
   }
-  .nav-menu.mobile-open { transform: translateX(0); }
+
+  .nav-menu.mobile-open {
+    transform: translateX(0);
+  }
+
   .nav-link {
     font-size: 1rem;
     padding: 12px 28px;
     width: 100%;
     text-align: center;
   }
-  .mobile-menu-toggle { display: flex; z-index: 1000; }
-  .theme-toggle-btn { width: 48px; height: 48px; }
+
+  .mobile-menu-toggle {
+    display: flex;
+    z-index: 1000;
+  }
+
+  .theme-toggle-btn {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 /* ─── Responsive Breakpoints ─── */
+
 @media (max-width: 1200px) {
   .composition-grid { grid-template-columns: repeat(4, 1fr); }
   .summary-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1635,58 +1659,160 @@ ul { list-style: none; }
 
 @media (max-width: 1024px) {
   :root { --section-pad: 80px; }
+
   .hero-container {
     grid-template-columns: 1fr;
     text-align: center;
+    overflow-x: hidden;
   }
-  .hero-content { max-width: 99%; }
-  .hero-badge, .hero-cta { justify-content: center; }
-  .hero-description { margin: 0 auto 42px; }
+
+  .hero-content { max-width: 100%; }
+
+  .hero-badge,
+  .hero-cta {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-description {
+    margin: 0 auto 42px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
   .hero-visual {
     display: none;
   }
+
   .hero-stats {
     justify-content: center;
+    flex-wrap: wrap;
   }
+
   .composition-grid { grid-template-columns: repeat(3, 1fr); }
   .kpi-grid { grid-template-columns: repeat(2, 1fr); }
   .positioning-highlights { grid-template-columns: repeat(2, 1fr); }
-  .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
 }
 
 @media (max-width: 768px) {
   .nav-container { padding: 0 20px; }
   .container { padding: 0 20px; }
+
   .summary-grid { grid-template-columns: 1fr; }
   .composition-grid { grid-template-columns: repeat(2, 1fr); }
   .indications-grid { grid-template-columns: repeat(2, 1fr); }
+
   .marketing-grid { grid-template-columns: 1fr; }
   .kpi-grid { grid-template-columns: 1fr; }
+
   .mechanism-timeline { padding-left: 50px; }
-  .hero-stats { flex-wrap: wrap; }
-  .stat-item { min-width: 100px; }
-  .technical-table td, .technical-table th { padding: 14px 18px; }
-  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
-  .positioning-highlights { grid-template-columns: repeat(2, 1fr); }
+
+  .hero-stats {
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    min-width: 100px;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .technical-table td,
+  .technical-table th {
+    padding: 14px 18px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .positioning-highlights {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
+/* ─── FIXED MOBILE VERSION (IMPORTANT FIX) ─── */
 @media (max-width: 480px) {
-  .composition-grid { grid-template-columns: repeat(2, 1fr); }
-  .indications-grid { grid-template-columns: 1fr; }
-  .hero-cta { flex-direction: column; align-items: center; }
-  .btn { width: 100%; max-width: 280px; }
-  .positioning-highlights { grid-template-columns: 1fr 1fr; }
-  .timeline-item { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; }
+
+  .composition-grid,
+  .indications-grid,
+  .positioning-highlights,
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-container,
+  .hero-content {
+    overflow-x: hidden;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero-stats {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-item {
+    width: 100%;
+    text-align: center;
+  }
+
+  .timeline-item {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-description {
+    padding: 0 10px;
+  }
 }
 
-/* ─── Card hover-lift utility ─── */
+/* ─── GLOBAL FIX (SOLVES RIGHT SIDE CUT / OVERFLOW) ─── */
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* Prevent text clipping anywhere */
+p, h1, h2, h3, h4, h5, h6, span, div {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* ─── Card Hover Utilities ─── */
+
 .card-hover-lift {
   will-change: transform;
 }
+
 .scale-on-hover {
   will-change: transform;
 }
+
 .tilt-effect {
   will-change: transform;
 }
