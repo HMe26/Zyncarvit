@@ -1639,7 +1639,7 @@ ul { list-style: none; }
     grid-template-columns: 1fr;
     text-align: center;
   }
-  .hero-content { max-width: 100%; }
+  .hero-content { max-width: 99%; }
   .hero-badge, .hero-cta { justify-content: center; }
   .hero-description { margin: 0 auto 42px; }
   .hero-visual {
